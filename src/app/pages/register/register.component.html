@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="content">
+    <form [formGroup]="registerForm" (submit)="registerUser()">
+      <h1>Registre-se agora</h1>
+      <input formControlName="name" type="text" placeholder="Nome">
+      <input formControlName="email" type="email" placeholder="Email">
+      <input formControlName="password" type="password" placeholder="Senha">
+      <app-button [buttonName]="'REGISTRAR'"></app-button>
+      <h2>Já possui cadastro?</h2>
+      <a routerLink="/">
+        <i data-feather="log-in"></i>
+        Fazer Login
+      </a>
+    </form>
+  </div>
+</div>

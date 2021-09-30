@@ -1,0 +1,21 @@
+<div class="overlay" *ngIf="show">
+  <div class="modal">
+    <form>
+      <h1 *ngIf="isUpdate; else createEventTitle">Editar Evento</h1>
+      <ng-template #createEventTitle><h1>Novo Evento</h1></ng-template>
+      <textarea type="text" placeholder="Descrição do evento"></textarea>
+      <div class="inputLine">
+        <input type="date">
+        <input type="time">
+      </div>
+      <div class="inputLine">
+        <input type="date">
+        <input type="time">
+      </div>
+      <div class="inputLine">
+        <button id="cancel" (click)="toggle()">Cancelar</button>
+        <button id="confirm" >Confirmar</button>
+      </div>
+    </form>
+  </div>
+</div>
