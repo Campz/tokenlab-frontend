@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { Apollo, gql } from 'apollo-angular';
 import { Component, OnInit } from '@angular/core';
+
+import * as Feather from 'feather-icons';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private apolo: Apollo) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService
+  ) {
     this.registerForm = this.formBuilder.group({
       name: '',
       email: '',
@@ -19,33 +23,20 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    Feather.replace();
+  }
 
   registerUser() {
     const { name, email, password } = this.registerForm.getRawValue();
-    console.log({
-      name,
-      email,
-      password,
-    });
 
-    const createUser = gql`
-      mutation createUser($name: String!, $email: String!, $password: String!) {
-        createUser(name: $name, email: $email, password: $password) {
-          id
-        }
+    this.userService.createUser(name, email, password).subscribe(
+      ({ data }) => {
+        console.log(data);
+      },
+      (error) => {
+        alert(error);
       }
-    `;
-
-    this.apolo
-      .mutate({
-        mutation: createUser,
-        variables: {
-          name,
-          email,
-          password,
-        },
-      })
-      .subscribe();
+    );
   }
 }

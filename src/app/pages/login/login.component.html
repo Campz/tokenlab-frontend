@@ -1,9 +1,9 @@
 <div class="container">
   <div class="content">
-    <form>
+    <form [formGroup]="loginForm" (submit)="login()">
       <h1>Fazer login</h1>
-      <app-input [type]="'email'" [placeholder]="'Email'" [icon]="'mail'"></app-input>
-      <app-input [type]="'password'" [placeholder]="'Senha'" [icon]="'lock'"></app-input>
+      <input formControlName="email" type="email" placeholder="Email">
+      <input formControlName="password" type="password" placeholder="Senha">
       <app-button [buttonName]="'ENTRAR'"></app-button>
       <h2>Não possui cadastro?</h2>
       <a routerLink="/register">

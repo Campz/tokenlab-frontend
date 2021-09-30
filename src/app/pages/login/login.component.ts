@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+
 import * as Feather from 'feather-icons';
-import { User } from 'src/app/core/models/User';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -9,13 +10,33 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  private user: User;
+  loginForm: FormGroup;
 
-  constructor(private authService: AuthService) {
-    this.user = new User();
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService
+  ) {
+    this.loginForm = this.formBuilder.group({
+      email: '',
+      password: '',
+    });
   }
 
   ngOnInit(): void {
     Feather.replace();
+  }
+
+  login() {
+    const { email, password } = this.loginForm.getRawValue();
+
+    this.authService.createSession(email, password).subscribe(
+      ({ data }) => {
+        console.log(data?.createSession.token);
+        localStorage.setItem('JWT', String(data?.createSession.token));
+      },
+      (error) => {
+        alert(error);
+      }
+    );
   }
 }
