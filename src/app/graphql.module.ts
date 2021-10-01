@@ -19,7 +19,7 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
 
   // Get the authentication token from local storage if it exists
   const auth = setContext((operation, context) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('JWT');
 
     if (token === null) {
       return {};

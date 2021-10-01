@@ -13,22 +13,19 @@ const login = gql`
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private apolo: Apollo) {}
+  constructor(private apollo: Apollo) {}
 
   createSession(email: string, password: string) {
-    return this.apolo.mutate({
+    return this.apollo.mutate<any>({
       mutation: login,
       variables: {
         email,
         password,
       },
-      optimisticResponse: {
-        __typename: 'Mutation',
-        createSession: {
-          __typename: 'Session',
-          token: String,
-        },
-      },
     });
+  }
+
+  logout() {
+    this.apollo.client.resetStore();
   }
 }

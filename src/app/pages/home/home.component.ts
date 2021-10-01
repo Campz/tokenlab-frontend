@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import * as Feather from 'feather-icons';
 
-import { Event } from '../../core/models/Event';
+import * as Feather from 'feather-icons';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { EventService } from 'src/app/shared/services/event.service';
 
 @Component({
   selector: 'app-home',
@@ -9,15 +12,17 @@ import { Event } from '../../core/models/Event';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  event: Event = new Event();
-
-  constructor() {
-    this.event.description = 'Descrição aqui do eventooo';
-    this.event.start_date = '2021-11-01T19:20';
-  }
+  events: Observable<any> | null = null;
+  constructor(
+    private authService: AuthService,
+    private eventService: EventService
+  ) {}
 
   ngOnInit(): void {
     Feather.replace();
+    this.events = this.eventService
+      .get()
+      .valueChanges.pipe(map((result) => result.data.events));
   }
 
   getDay(date: string): string {
@@ -27,9 +32,12 @@ export class HomeComponent implements OnInit {
 
   getMonth(date: string): string {
     const month = String(new Date(date)).split(' ');
-    console.log(month);
     return month[1];
   }
 
   getHours(start_date: string, end_date: string) {}
+
+  logout() {
+    this.authService.logout();
+  }
 }

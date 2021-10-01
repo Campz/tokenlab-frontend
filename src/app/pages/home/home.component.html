@@ -1,33 +1,40 @@
 <app-event-modal #modal></app-event-modal>
 <div class="container">
-    <header>
-        <img src="assets/logo.svg" alt="" />
-        <div class="headerContainer">
-            <h4>Sair</h4>
-            <i data-feather="log-in"></i>
-        </div>
-    </header>
-    <div class="content">
-        <div  class="btContainer">
-            <app-button (click)="modal.toggle(); modal.isUpdate = false" [buttonName]="'Novo Evento'"></app-button>
-        </div>
-        <h1>Meus Eventos</h1>
-        <div class="events">
-            <div class="eventCard" (click)="modal.toggle(); modal.isUpdate = true">
-                <div class="eventContainer">
-                    <div class="date">
-                        <h2>{{ getDay(event.start_date) }}</h2>
-                        <h3>{{ getMonth(event.start_date) }}</h3>
-                    </div>
-                    <div class="details">
-                        <p>{{ event.description }}</p>
-                        <div class="hour">
-                            <i data-feather="clock"></i>
-                            <p>12:00 - 17:00</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <header>
+    <img src="assets/logo.svg" alt="" />
+    <div class="headerContainer" (click)="logout()" routerLink="/">
+      <h4>Sair</h4>
+      <i data-feather="log-in"></i>
     </div>
+  </header>
+  <div class="content">
+    <div class="btContainer">
+      <app-button
+        (click)="modal.toggle(); modal.isUpdate = false"
+        [buttonName]="'Novo Evento'"
+      ></app-button>
+    </div>
+    <h1>Meus Eventos</h1>
+    <div class="events">
+      <div
+        *ngFor="let event of events | async"
+        class="eventCard"
+        (click)="modal.event = event; modal.toggle(); modal.isUpdate = true"
+      >
+        <div class="eventContainer">
+          <div class="date">
+            <h2>{{ getDay(event.start_date) }}</h2>
+            <h3>{{ getMonth(event.start_date) }}</h3>
+          </div>
+          <div class="details">
+            <p>{{ event.description }}</p>
+            <div class="hour">
+              <i data-feather="clock"></i>
+              <p>12:00 - 17:00</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
