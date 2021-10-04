@@ -35,7 +35,12 @@ export class HomeComponent implements OnInit {
     return month[1];
   }
 
-  getHours(start_date: string, end_date: string) {}
+  getHours(start_date: string, end_date: string) {
+    const startTime = start_date.split('T')[1].split(':');
+    const endTime = end_date.split('T')[1].split(':');
+    const timeGap = `${startTime[0]}:${startTime[1]} - ${endTime[0]}:${endTime[1]}`;
+    return timeGap;
+  }
 
   logout() {
     this.authService.logout();

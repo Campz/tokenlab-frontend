@@ -10,7 +10,9 @@
   <div class="content">
     <div class="btContainer">
       <app-button
-        (click)="modal.toggle(); modal.isUpdate = false"
+        (click)="
+          modal.isUpdate = false; modal.updateEventData(); modal.toggle()
+        "
         [buttonName]="'Novo Evento'"
       ></app-button>
     </div>
@@ -19,7 +21,12 @@
       <div
         *ngFor="let event of events | async"
         class="eventCard"
-        (click)="modal.event = event; modal.toggle(); modal.isUpdate = true"
+        (click)="
+          modal.event = event;
+          modal.isUpdate = true;
+          modal.updateEventData();
+          modal.toggle()
+        "
       >
         <div class="eventContainer">
           <div class="date">
@@ -30,7 +37,7 @@
             <p>{{ event.description }}</p>
             <div class="hour">
               <i data-feather="clock"></i>
-              <p>12:00 - 17:00</p>
+              <p>{{ getHours(event.start_date, event.end_date) }}</p>
             </div>
           </div>
         </div>

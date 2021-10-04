@@ -31,6 +31,26 @@ const createEvent = gql`
   }
 `;
 
+const updateEvent = gql`
+  mutation updateEvent(
+    $id: String!
+    $description: String!
+    $start_date: String!
+    $end_date: String!
+  ) {
+    updateEvent(
+      id: $id
+      description: $description
+      start_date: $start_date
+      end_date: $end_date
+    ) {
+      description
+      start_date
+      end_date
+    }
+  }
+`;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -44,7 +64,7 @@ export class EventService {
   }
 
   create(description: string, start_date: string, end_date: string) {
-    return this.apollo.mutate({
+    return this.apollo.mutate<any>({
       mutation: createEvent,
       variables: {
         description,
@@ -54,7 +74,22 @@ export class EventService {
     });
   }
 
-  update() {}
+  update(
+    id: string,
+    description: string,
+    start_date: string,
+    end_date: string
+  ) {
+    return this.apollo.mutate<any>({
+      mutation: updateEvent,
+      variables: {
+        id,
+        description,
+        start_date,
+        end_date,
+      },
+    });
+  }
 
   delete() {}
 }

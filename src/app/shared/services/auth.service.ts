@@ -26,6 +26,6 @@ export class AuthService {
   }
 
   logout() {
-    this.apollo.client.resetStore();
+    localStorage.removeItem('JWT');
   }
 }
