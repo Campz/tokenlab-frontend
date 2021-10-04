@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import * as Feather from 'feather-icons';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { EventService } from '../../services/event.service';
 import { Event } from 'src/app/core/models/Event';
@@ -29,7 +30,9 @@ export class EventModalComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    Feather.replace();
+  }
 
   updateEventData() {
     if (this.isUpdate) {
@@ -65,13 +68,14 @@ export class EventModalComponent implements OnInit {
       this.eventForm.getRawValue();
     const start = `${start_date}T${start_time}`;
     const end = `${end_date}T${end_time}`;
+    console.log(start);
     if (this.isUpdate) {
       this.eventService
         .update(this.event.id, description, start, end)
         .subscribe(
           ({ data }) => {
             console.log(data);
-            window.location.reload();
+            //window.location.reload();
           },
           (error) => {
             alert(error);
@@ -81,7 +85,7 @@ export class EventModalComponent implements OnInit {
       this.eventService.create(description, start, end).subscribe(
         ({ data }) => {
           console.log(data);
-          window.location.reload();
+          //window.location.reload();
         },
         (error) => {
           alert(error);
@@ -89,5 +93,17 @@ export class EventModalComponent implements OnInit {
       );
     }
     this.show = false;
+  }
+
+  delete() {
+    this.eventService.delete(this.event.id).subscribe(
+      ({ data }) => {
+        console.log(data);
+        window.location.reload();
+      },
+      (error) => {
+        alert(error);
+      }
+    );
   }
 }

@@ -51,6 +51,12 @@ const updateEvent = gql`
   }
 `;
 
+const deleteEvent = gql`
+  mutation deleteEvent($id: String!) {
+    deleteEvent(id: $id)
+  }
+`;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -91,5 +97,12 @@ export class EventService {
     });
   }
 
-  delete() {}
+  delete(id: string) {
+    return this.apollo.mutate<any>({
+      mutation: deleteEvent,
+      variables: {
+        id,
+      },
+    });
+  }
 }

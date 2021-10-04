@@ -64,6 +64,17 @@ input {
   padding: 8px;
 }
 
+.deleteContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+a {
+  color: #f64b5c;
+}
+
 button {
   padding: 10px;
   color: #fff;

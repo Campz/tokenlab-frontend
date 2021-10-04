@@ -20,6 +20,10 @@
         <button id="cancel" (click)="toggle()">Cancelar</button>
         <button id="confirm">Confirmar</button>
       </div>
+      <div class="deleteContainer" *ngIf="isUpdate">
+        <i data-feather="log-in"></i>
+        <a (click)="delete()">Deletar evento</a>
+      </div>
     </form>
   </div>
 </div>
